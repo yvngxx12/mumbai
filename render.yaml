@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: mumbai
+    runtime: docker
+    repo: https://github.com/yvngxx12/mumbai.git
+    plan: free
+    region: oregon
+    autoDeploy: true
+    healthCheckPath: /
+    startCommand: bash -c "php artisan migrate --force --no-interaction && apache2-foreground"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        value: base64:N3WkyFqPhyWB5Ads5R6l13mFpTSAlP+SndQsmCAlBmA=
+      - key: APP_URL
+        value: https://mumbai.onrender.com
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_DATABASE
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
