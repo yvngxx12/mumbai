@@ -15,6 +15,5 @@ public/storage
 tests
 Dockerfile
 .dockerignore
-docker
 render.yaml
 summary.md
