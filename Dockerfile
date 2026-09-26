@@ -23,4 +23,4 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["bash", "-c", "php artisan migrate --force --no-interaction && php artisan db:seed --force --no-interaction && apache2-foreground"]

@@ -7,7 +7,6 @@ services:
     region: oregon
     autoDeploy: true
     healthCheckPath: /
-    startCommand: bash -c "php artisan migrate --force --no-interaction && php artisan db:seed --force --no-interaction && apache2-foreground"
     envVars:
       - key: APP_ENV
         value: production
