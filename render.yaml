@@ -6,7 +6,7 @@ services:
     plan: free
     region: oregon
     autoDeploy: true
-    healthCheckPath: /
+    healthCheckPath: /ping.txt
     envVars:
       - key: APP_ENV
         value: production
