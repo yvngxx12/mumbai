@@ -19,7 +19,9 @@ COPY . /var/www/html
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
-    && php artisan storage:link
+    && php artisan storage:link \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R ug+rwX storage bootstrap/cache
 
 EXPOSE 80
 
