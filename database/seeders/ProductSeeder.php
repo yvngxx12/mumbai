@@ -210,10 +210,14 @@ class ProductSeeder extends Seeder
                     continue;
                 }
 
-                $image = "images/products/{$slug}-".self::colorSlug($colorName).'.svg';
+                $baseName = "{$slug}-".self::colorSlug($colorName);
+                $image = self::photoFor($baseName)
+                    ?? "images/products/{$baseName}.svg";
                 $pivot[$color->id] = ['image' => $image];
                 $primaryImage ??= $image;
             }
+
+            $primaryImage = self::photoFor($slug) ?? $primaryImage;
 
             $product = Product::updateOrCreate(
                 ['slug' => $slug],
@@ -233,6 +237,23 @@ class ProductSeeder extends Seeder
                 Size::whereIn('name', $data['sizes'])->orderBy('sort')->pluck('id'),
             );
         }
+    }
+
+    /**
+     * Devuelve la primera foto (jpg/jpeg/png/webp/gif) encontrada en el repo
+     * para el nombre base dado, o null si no existe ninguna.
+     */
+    private static function photoFor(string $baseName): ?string
+    {
+        $dir = public_path('images/products');
+
+        foreach (['jpg', 'jpeg', 'png', 'webp', 'gif'] as $ext) {
+            if (file_exists($dir.'/'.$baseName.'.'.$ext)) {
+                return "images/products/{$baseName}.{$ext}";
+            }
+        }
+
+        return null;
     }
 
     /**
