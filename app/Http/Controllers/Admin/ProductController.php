@@ -195,7 +195,7 @@ class ProductController extends Controller
 
         $name = Str::random(24).'.'.$file->getClientOriginalExtension();
 
-        return 'images/'.$file->storeAs('products', $name, 'uploads');
+        return 'storage/'.$file->storeAs('products', $name, 'uploads');
     }
 
     /**
@@ -208,6 +208,7 @@ class ProductController extends Controller
         }
 
         $relative = Str::after($path, 'images/');
+        $relative = Str::after($relative, 'storage/');
 
         if ($relative === $path) {
             return;

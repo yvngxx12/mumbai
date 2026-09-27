@@ -7,6 +7,9 @@ use App\Models\Product;
 use App\Models\Size;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AdminTest extends TestCase
@@ -138,5 +141,43 @@ class AdminTest extends TestCase
             ->assertRedirect();
 
         $this->assertDatabaseHas('sizes', ['name' => 'XXXL', 'sort' => 7]);
+    }
+
+    public function test_admin_uploading_a_product_image_stores_public_path(): void
+    {
+        Storage::fake('uploads');
+
+        $this->loginAsAdmin();
+
+        $this->post(route('admin.products.store'), [
+            'name' => 'Tee con foto',
+            'type' => 'Básica',
+            'description' => 'Con imagen subida.',
+            'price' => 25000,
+            'stock' => 3,
+            'image' => UploadedFile::fake()->image('foto.jpg'),
+        ])->assertRedirect();
+
+        $product = Product::where('slug', 'tee-con-foto')->first();
+
+        $this->assertNotNull($product);
+        $this->assertStringStartsWith('storage/products/', $product->image);
+
+        Storage::disk('uploads')->assertExists(Str::after($product->image, 'storage/'));
+    }
+
+    public function test_deleting_a_product_removes_its_uploaded_image(): void
+    {
+        Storage::fake('uploads');
+
+        $this->loginAsAdmin();
+
+        $product = Product::factory()->create(['image' => 'storage/products/prueba.jpg']);
+        Storage::disk('uploads')->put('products/prueba.jpg', 'contenido');
+
+        $this->delete(route('admin.products.destroy', $product))
+            ->assertRedirect(route('admin.products.index'));
+
+        Storage::disk('uploads')->assertMissing('products/prueba.jpg');
     }
 }
