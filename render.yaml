@@ -15,7 +15,7 @@ services:
       - key: APP_KEY
         value: base64:N3WkyFqPhyWB5Ads5R6l13mFpTSAlP+SndQsmCAlBmA=
       - key: APP_URL
-        value: https://mumbai.onrender.com
+        value: https://mumbai-ef2d.onrender.com
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
