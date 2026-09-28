@@ -18,6 +18,7 @@
             <nav class="sidebar-nav">
                 <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">Panel</a>
                 <a href="{{ route('admin.products.index') }}" class="{{ request()->routeIs('admin.products.*') ? 'is-active' : '' }}">Productos</a>
+                <a href="{{ route('admin.orders.index') }}" class="{{ request()->routeIs('admin.orders.*') ? 'is-active' : '' }}">Compras</a>
                 <a href="{{ route('admin.colors.index') }}" class="{{ request()->routeIs('admin.colors.*') ? 'is-active' : '' }}">Colores</a>
                 <a href="{{ route('admin.sizes.index') }}" class="{{ request()->routeIs('admin.sizes.*') ? 'is-active' : '' }}">Talles</a>
             </nav>

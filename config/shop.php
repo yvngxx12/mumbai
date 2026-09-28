@@ -25,4 +25,17 @@ return [
     | modificar las vistas.
     */
     'logo' => 'images/logo.png',
+
+    /*
+    | Datos del checkout (preventa contra transferencia).
+    | CVU / Alias / WhatsApp se setean en Render Environment con las claves
+    | SHOP_CVU, SHOP_ALIAS y SHOP_WHATSAPP, o directamente acá.
+    */
+    'checkout' => [
+        'deposit_percent' => 50,
+        'cvu' => env('SHOP_CVU', '0000000000000000000000'),
+        'alias' => env('SHOP_ALIAS', 'mumbai.pagos'),
+        'whatsapp' => env('SHOP_WHATSAPP', '5491100000000'),
+        'drop_date' => env('SHOP_DROP_DATE', '25 de octubre de 2026'),
+    ],
 ];

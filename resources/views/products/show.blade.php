@@ -95,10 +95,16 @@
 
                 <p class="product-description">{{ $product->description }}</p>
 
-                <button type="button" class="btn-buy" data-buy-button>Comprar</button>
-                <p class="buy-message" data-buy-message hidden>
-                    El sistema de pagos estará disponible próximamente.
-                </p>
+                @if (session('checkout_error'))
+                    <p class="checkout-error">{{ session('checkout_error') }}</p>
+                @endif
+
+                <button
+                    type="button"
+                    class="btn-buy"
+                    data-buy-button
+                    data-product-slug="{{ $product->slug }}"
+                >Comprar</button>
             </div>
         </div>
     </section>

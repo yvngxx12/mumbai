@@ -126,7 +126,6 @@
            Comprar
            ---------------------------------------------- */
         var buyButton = productRoot.querySelector("[data-buy-button]");
-        var buyMessage = productRoot.querySelector("[data-buy-message]");
 
         if (buyButton) {
             buyButton.addEventListener("click", function () {
@@ -140,14 +139,12 @@
 
                 var colorName = selectedColor ? selectedColor.getAttribute("data-color-name") : "";
                 var sizeName = selectedSize ? selectedSize.value : "";
+                var slug = buyButton.getAttribute("data-product-slug") || "";
 
-                buyMessage.textContent =
-                    "Seleccionaste " +
-                    (sizeName ? sizeName + " · " : "") +
-                    (colorName ? colorName : "") +
-                    " — El sistema de pagos estará disponible próximamente.";
-
-                buyMessage.hidden = false;
+                window.location.href =
+                    "/comprar/" + encodeURIComponent(slug) +
+                    "?color=" + encodeURIComponent(colorName) +
+                    "&size=" + encodeURIComponent(sizeName);
             });
         }
     }

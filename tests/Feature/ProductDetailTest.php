@@ -26,7 +26,7 @@ class ProductDetailTest extends TestCase
         $response->assertSee('Talle');
         $response->assertSee('Color');
         $response->assertSee('Comprar');
-        $response->assertSee('El sistema de pagos estará disponible próximamente.');
+        $response->assertSee('data-product-slug', false);
 
         foreach ($product->sizes as $size) {
             $response->assertSee($size->name);

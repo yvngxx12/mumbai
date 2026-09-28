@@ -576,3 +576,66 @@ label {
         grid-template-columns: 1fr;
     }
 }
+
+/* ============================================================
+   COMPRAS
+   ============================================================ */
+.admin-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+}
+
+.admin-tabs a {
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.admin-tabs a:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+}
+
+.admin-tabs a.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+}
+
+.table-sub {
+    margin-top: 3px;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: var(--radius);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.badge-pending {
+    background: rgba(242, 240, 237, 0.08);
+    color: var(--text-muted);
+    border: 1px solid var(--border-strong);
+}
+
+.badge-confirmed {
+    background: rgba(125, 206, 143, 0.12);
+    color: var(--success);
+    border: 1px solid rgba(125, 206, 143, 0.35);
+}
+
+.badge-cancelled {
+    background: rgba(217, 74, 74, 0.12);
+    color: var(--danger);
+    border: 1px solid rgba(217, 74, 74, 0.35);
+}
