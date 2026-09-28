@@ -18,7 +18,7 @@ class CatalogTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Colección');
-        $response->assertSee('20 productos');
+        $response->assertSee(Product::count().' productos');
         $response->assertSee('Urban Black');
         $response->assertSee('Nocturne');
     }
