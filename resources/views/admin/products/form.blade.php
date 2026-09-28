@@ -78,7 +78,7 @@
             <div class="panel-head"><h2>Colores e imágenes</h2></div>
             <div class="panel-body">
                 <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px;">
-                    Cada color puede llevar su propia imagen (la grande cambia al seleccionarlo). Si no se sube imagen, el producto usa la de portada.
+                    Cada color puede llevar su propia imagen (la grande cambia al seleccionarlo). La "imagen trasera" opcional se muestra como parte de atrás en la ficha del producto.
                 </p>
 
                 @php
@@ -103,12 +103,14 @@
 
                             <div class="color-image-box" data-color-image-box>
                                 @php
-                                    $pivotImage = $product->colors->firstWhere('id', $color->id)?->pivot?->image;
+                                    $pivotColor = $product->exists
+                                        ? $product->colors->firstWhere('id', $color->id)?->pivot
+                                        : null;
                                 @endphp
 
-                                @if ($product->exists && $pivotImage)
+                                @if ($pivotColor?->image)
                                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
-                                        <img src="{{ asset($pivotImage) }}" alt="" style="width: 56px; border: 1px solid var(--border); border-radius: var(--radius);">
+                                        <img src="{{ asset($pivotColor->image) }}" alt="" style="width: 56px; border: 1px solid var(--border); border-radius: var(--radius);">
                                         <label style="display: flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; margin: 0;">
                                             <input type="checkbox" name="remove_color_images[]" value="{{ $color->id }}" style="width: auto;">
                                             Quitar imagen
@@ -117,6 +119,21 @@
                                 @endif
 
                                 <input type="file" name="color_images[{{ $color->id }}]" accept="image/*" {{ in_array($color->id, $selectedColorIds) ? '' : 'disabled' }}>
+
+                                @if ($pivotColor?->image_back)
+                                    <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0 6px;">
+                                        <img src="{{ asset($pivotColor->image_back) }}" alt="" style="width: 56px; border: 1px solid var(--border); border-radius: var(--radius);">
+                                        <label style="display: flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; margin: 0;">
+                                            <input type="checkbox" name="remove_color_images_back[]" value="{{ $color->id }}" style="width: auto;">
+                                            Quitar trasera
+                                        </label>
+                                    </div>
+                                @endif
+
+                                <label style="display: block; margin-top: 8px; text-transform: none; letter-spacing: 0; font-size: 0.75rem;">
+                                    Imagen trasera (opcional)
+                                </label>
+                                <input type="file" name="color_images_back[{{ $color->id }}]" accept="image/*" {{ in_array($color->id, $selectedColorIds) ? '' : 'disabled' }}>
                             </div>
                         </div>
                     </div>

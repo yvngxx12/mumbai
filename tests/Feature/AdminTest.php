@@ -180,4 +180,67 @@ class AdminTest extends TestCase
 
         Storage::disk('uploads')->assertMissing('products/prueba.jpg');
     }
+
+    public function test_admin_can_upload_a_back_image_for_a_color(): void
+    {
+        Storage::fake('uploads');
+
+        $this->loginAsAdmin();
+
+        $color = Color::factory()->create();
+
+        $this->post(route('admin.products.store'), [
+            'name' => 'Frente y espalda',
+            'type' => 'Básica',
+            'description' => 'Con las dos partes.',
+            'price' => 26000,
+            'stock' => 4,
+            'colors' => [$color->id],
+            'color_images' => [$color->id => UploadedFile::fake()->image('front.jpg')],
+            'color_images_back' => [$color->id => UploadedFile::fake()->image('back.jpg')],
+        ])->assertRedirect();
+
+        $product = Product::where('slug', 'frente-y-espalda')->first();
+
+        $this->assertNotNull($product);
+        $this->assertStringStartsWith('storage/products/', $product->imageForColor($color));
+        $this->assertStringStartsWith('storage/products/', $product->backImageForColor($color));
+
+        Storage::disk('uploads')->assertExists(Str::after($product->backImageForColor($color), 'storage/'));
+    }
+
+    public function test_edit_form_shows_the_back_image_of_a_color(): void
+    {
+        $this->loginAsAdmin();
+
+        $color = Color::factory()->create();
+        $product = Product::factory()->create();
+        $product->colors()->sync([
+            $color->id => ['image' => 'storage/products/front.jpg', 'image_back' => 'storage/products/back.jpg'],
+        ]);
+
+        $this->get(route('admin.products.edit', $product))
+            ->assertOk()
+            ->assertSee('Quitar trasera')
+            ->assertSee('Imagen trasera (opcional)');
+    }
+
+    public function test_deleting_a_product_removes_color_back_images(): void
+    {
+        Storage::fake('uploads');
+
+        $this->loginAsAdmin();
+
+        $color = Color::factory()->create();
+        $product = Product::factory()->create();
+        $product->colors()->sync([
+            $color->id => ['image' => 'storage/products/front.jpg', 'image_back' => 'storage/products/back.jpg'],
+        ]);
+        Storage::disk('uploads')->put('products/back.jpg', 'contenido');
+
+        $this->delete(route('admin.products.destroy', $product))
+            ->assertRedirect(route('admin.products.index'));
+
+        Storage::disk('uploads')->assertMissing('products/back.jpg');
+    }
 }

@@ -5,15 +5,17 @@
 @section('content')
     @php
         $colors = $product->colors;
-        $colorImages = $colors
+        $colorViews = $colors
             ->map(fn ($color) => [
                 'name' => $color->name,
                 'hex' => $color->hex,
                 'image' => $product->imageForColor($color),
+                'back' => $product->backImageForColor($color),
             ])
-            ->unique('image')
             ->values();
-        $primaryImage = $colorImages->first()['image'] ?? $product->image;
+        $thumbImages = $colorViews->unique('image')->values();
+        $primaryImage = $thumbImages->first()['image'] ?? $product->image;
+        $hasBackViews = $colorViews->contains(fn ($view) => $view['back'] !== null);
     @endphp
 
     <section class="product-detail" data-product-root>
@@ -28,9 +30,15 @@
                     >
                 </div>
 
-                @if ($colorImages->count() > 1)
+                @if ($hasBackViews)
+                    <button type="button" class="view-back" data-view-back hidden>
+                        <span data-view-back-label>Ver parte trasera</span>
+                    </button>
+                @endif
+
+                @if ($thumbImages->count() > 1)
                     <div class="product-gallery-thumbs">
-                        @foreach ($colorImages as $colorImage)
+                        @foreach ($thumbImages as $colorImage)
                             <button
                                 type="button"
                                 class="gallery-thumb {{ $loop->first ? 'is-active' : '' }}"
@@ -66,16 +74,17 @@
                 <div class="product-section">
                     <h2 class="product-section-title">Color</h2>
                     <div class="color-selector" data-color-selector>
-                        @foreach ($colors as $color)
+                        @foreach ($colorViews as $colorView)
                             <button
                                 type="button"
                                 class="color-btn {{ $loop->first ? 'is-selected' : '' }}"
-                                style="--swatch: {{ $color->hex }}"
-                                value="{{ $color->name }}"
-                                title="{{ $color->name }}"
-                                aria-label="Color {{ $color->name }}"
-                                data-color-name="{{ $color->name }}"
-                                data-color-image="{{ asset($product->imageForColor($color)) }}"
+                                style="--swatch: {{ $colorView['hex'] }}"
+                                value="{{ $colorView['name'] }}"
+                                title="{{ $colorView['name'] }}"
+                                aria-label="Color {{ $colorView['name'] }}"
+                                data-color-name="{{ $colorView['name'] }}"
+                                data-color-image="{{ asset($colorView['image']) }}"
+                                data-color-back="{{ $colorView['back'] ? asset($colorView['back']) : '' }}"
                             ></button>
                         @endforeach
                     </div>

@@ -319,6 +319,25 @@ button {
     object-fit: cover;
 }
 
+.view-back {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.view-back:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
 .product-gallery-thumbs {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));

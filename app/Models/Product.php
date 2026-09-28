@@ -35,11 +35,11 @@ class Product extends Model
 
     public function colors(): BelongsToMany
     {
-        return $this->belongsToMany(Color::class)->withPivot('image');
+        return $this->belongsToMany(Color::class)->withPivot('image', 'image_back');
     }
 
     /**
-     * Imagen que corresponde a un color de este producto
+     * Imagen de frente que corresponde a un color de este producto
      * (cae en la imagen principal si el color no tiene la propia).
      */
     public function imageForColor(Color $color): string
@@ -47,6 +47,16 @@ class Product extends Model
         $pivot = $this->colors->firstWhere('id', $color->id);
 
         return $pivot?->pivot->image ?? $this->image;
+    }
+
+    /**
+     * Imagen de espalda del color, o null si ese color no tiene parte trasera.
+     */
+    public function backImageForColor(Color $color): ?string
+    {
+        $pivot = $this->colors->firstWhere('id', $color->id);
+
+        return $pivot?->pivot->image_back;
     }
 
     public function sizes(): BelongsToMany

@@ -316,7 +316,7 @@ class ProductSeeder extends Seeder
                 'name' => 'TOUR',
                 'type' => 'Básica',
                 'price' => 22900,
-                'colors' => ['Blanco', 'Negro'],
+                'colors' => ['Blanco', 'Negro', 'Blanco/Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
                 'description' => 'Producto de la colección Mumbai.',
@@ -334,7 +334,7 @@ class ProductSeeder extends Seeder
                 'name' => 'YOUNG',
                 'type' => 'Básica',
                 'price' => 22900,
-                'colors' => ['Negro'],
+                'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
                 'description' => 'Producto de la colección Mumbai.',
@@ -355,9 +355,11 @@ class ProductSeeder extends Seeder
                 }
 
                 $baseName = "{$slug}-".self::colorSlug($colorName);
-                $image = self::photoFor($baseName)
+                $image = self::photoFor("{$baseName}-adelante")
+                    ?? self::photoFor($baseName)
                     ?? "images/products/{$baseName}.svg";
-                $pivot[$color->id] = ['image' => $image];
+                $back = self::photoFor("{$baseName}-atras");
+                $pivot[$color->id] = ['image' => $image, 'image_back' => $back];
                 $primaryImage ??= $image;
             }
 
@@ -414,6 +416,7 @@ class ProductSeeder extends Seeder
             'Azul' => 'azul',
             'Beige' => 'beige',
             'Bordeaux' => 'bordeaux',
+            'Blanco/Negro' => 'blanco-negro',
             default => str()->slug($name),
         };
     }

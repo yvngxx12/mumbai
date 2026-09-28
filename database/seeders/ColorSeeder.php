@@ -21,6 +21,7 @@ class ColorSeeder extends Seeder
             ['name' => 'Azul', 'hex' => '#2563eb'],
             ['name' => 'Beige', 'hex' => '#d6c3a6'],
             ['name' => 'Bordeaux', 'hex' => '#7f1d1d'],
+            ['name' => 'Blanco/Negro', 'hex' => '#d4d4d8'],
         ];
 
         foreach ($colors as $color) {

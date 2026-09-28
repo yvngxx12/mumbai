@@ -23,6 +23,19 @@ class CatalogTest extends TestCase
         $response->assertSee('Nocturne');
     }
 
+    public function test_product_page_shows_front_and_back_for_products_with_both_sides(): void
+    {
+        $this->seed();
+
+        $product = Product::where('slug', 'pant')->firstOrFail();
+
+        $this->get(route('products.show', $product))
+            ->assertOk()
+            ->assertSee('Ver parte trasera')
+            ->assertSee('pant-blanco-adelante.png')
+            ->assertSee('pant-blanco-atras.png');
+    }
+
     public function test_catalog_links_to_each_product_detail(): void
     {
         $this->seed();

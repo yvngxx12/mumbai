@@ -113,6 +113,7 @@ class ProductController extends Controller
 
         foreach ($product->colors as $color) {
             $this->deleteStoredFile($color->pivot->image);
+            $this->deleteStoredFile($color->pivot->image_back);
         }
 
         $product->delete();
@@ -148,37 +149,51 @@ class ProductController extends Controller
     {
         $colorIds = $request->input('colors', []);
         $uploads = $request->file('color_images') ?? [];
+        $backUploads = $request->file('color_images_back') ?? [];
         $remove = $request->input('remove_color_images') ?? [];
+        $removeBack = $request->input('remove_color_images_back') ?? [];
         $pivot = [];
 
         foreach ($colorIds as $colorId) {
             $existing = $product->colors()
                 ->where('colors.id', $colorId)
-                ->first()?->pivot?->image;
+                ->first()?->pivot;
 
             $file = $uploads[$colorId] ?? null;
+            $backFile = $backUploads[$colorId] ?? null;
+
+            $image = $existing?->image;
+            $imageBack = $existing?->image_back;
 
             if (in_array($colorId, $remove, true)) {
-                if ($existing !== null) {
-                    $this->deleteStoredFile($existing);
+                if ($image !== null) {
+                    $this->deleteStoredFile($image);
                 }
 
-                $pivot[$colorId] = ['image' => null];
-
-                continue;
-            }
-
-            if ($file instanceof UploadedFile) {
-                if ($existing !== null) {
-                    $this->deleteStoredFile($existing);
+                $image = null;
+            } elseif ($file instanceof UploadedFile) {
+                if ($image !== null) {
+                    $this->deleteStoredFile($image);
                 }
 
-                $pivot[$colorId] = ['image' => $this->storeImage($file)];
-
-                continue;
+                $image = $this->storeImage($file);
             }
 
-            $pivot[$colorId] = ['image' => $existing];
+            if (in_array($colorId, $removeBack, true)) {
+                if ($imageBack !== null) {
+                    $this->deleteStoredFile($imageBack);
+                }
+
+                $imageBack = null;
+            } elseif ($backFile instanceof UploadedFile) {
+                if ($imageBack !== null) {
+                    $this->deleteStoredFile($imageBack);
+                }
+
+                $imageBack = $this->storeImage($backFile);
+            }
+
+            $pivot[$colorId] = ['image' => $image, 'image_back' => $imageBack];
         }
 
         $product->colors()->sync($pivot);

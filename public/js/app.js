@@ -16,11 +16,40 @@
         var thumbs = findAll("[data-thumb-color]");
         var mainImage = productRoot.querySelector("[data-gallery-main]");
         var selectedLabel = productRoot.querySelector("[data-selected-color]");
+        var backButton = productRoot.querySelector("[data-view-back]");
+        var backLabel = productRoot.querySelector("[data-view-back-label]");
+        var currentName = null;
+        var showingBack = false;
 
         function findThumbByImage(image) {
             return thumbs.filter(function (t) {
                 return t.getAttribute("data-thumb-image") === image;
             })[0];
+        }
+
+        function showSide() {
+            var btn = colorBtns.filter(function (b) {
+                return b.getAttribute("data-color-name") === currentName;
+            })[0];
+
+            if (!btn) {
+                return;
+            }
+
+            var front = btn.getAttribute("data-color-image");
+            var back = btn.getAttribute("data-color-back") || null;
+
+            if (mainImage) {
+                mainImage.src = showingBack && back ? back : front;
+            }
+
+            if (backButton) {
+                backButton.hidden = !back;
+
+                if (backLabel) {
+                    backLabel.textContent = showingBack ? "Ver parte delantera" : "Ver parte trasera";
+                }
+            }
         }
 
         function selectColor(name) {
@@ -32,25 +61,24 @@
                 return;
             }
 
-            var image = btn.getAttribute("data-color-image");
+            currentName = name;
+            showingBack = false;
 
             colorBtns.forEach(function (b) {
                 b.classList.toggle("is-selected", b === btn);
             });
 
-            var thumb = findThumbByImage(image);
+            var thumb = findThumbByImage(btn.getAttribute("data-color-image"));
 
             thumbs.forEach(function (t) {
                 t.classList.toggle("is-active", t === thumb);
             });
 
-            if (mainImage && image) {
-                mainImage.src = image;
-            }
-
             if (selectedLabel) {
                 selectedLabel.textContent = name;
             }
+
+            showSide();
         }
 
         colorBtns.forEach(function (btn) {
@@ -64,6 +92,17 @@
                 selectColor(thumb.getAttribute("data-thumb-color"));
             });
         });
+
+        if (backButton) {
+            backButton.addEventListener("click", function () {
+                showingBack = !showingBack;
+                showSide();
+            });
+        }
+
+        if (colorBtns.length) {
+            selectColor(colorBtns[0].getAttribute("data-color-name"));
+        }
 
         /* ----------------------------------------------
            Selector de talle
