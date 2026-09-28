@@ -27,9 +27,7 @@ class CatalogTest extends TestCase
     {
         $this->seed();
 
-        $product = Product::where('slug', 'pant')->firstOrFail();
-
-        $this->get(route('products.show', $product))
+        $this->get(route('products.show', ['pant']))
             ->assertOk()
             ->assertSee('Ver parte trasera')
             ->assertSee('pant-blanco-adelante.png')
