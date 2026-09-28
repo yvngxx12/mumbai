@@ -19,8 +19,8 @@ class CatalogTest extends TestCase
         $response->assertOk();
         $response->assertSee('Colección');
         $response->assertSee(Product::count().' productos');
-        $response->assertSee('Urban Black');
-        $response->assertSee('Nocturne');
+        $response->assertSee('12S');
+        $response->assertSee('MUMBAI');
     }
 
     public function test_product_page_shows_front_and_back_for_products_with_both_sides(): void
@@ -38,7 +38,7 @@ class CatalogTest extends TestCase
     {
         $this->seed();
 
-        $product = Product::where('slug', 'urban-black')->firstOrFail();
+        $product = Product::where('slug', '12s')->firstOrFail();
 
         $this->get(route('home'))
             ->assertSee(route('products.show', $product), false);

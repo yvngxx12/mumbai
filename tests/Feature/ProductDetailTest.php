@@ -14,7 +14,7 @@ class ProductDetailTest extends TestCase
     {
         $this->seed();
 
-        $product = Product::where('slug', 'urban-black')
+        $product = Product::where('slug', '12s')
             ->with(['colors', 'sizes'])
             ->firstOrFail();
 
@@ -37,7 +37,7 @@ class ProductDetailTest extends TestCase
     {
         $this->seed();
 
-        $product = Product::where('slug', 'urban-black')
+        $product = Product::where('slug', '12s')
             ->with('colors')
             ->firstOrFail();
 
