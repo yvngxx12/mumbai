@@ -109,7 +109,7 @@ class ProductSeeder extends Seeder
                 'name' => 'MUMBAI 2',
                 'type' => 'Básica',
                 'price' => 22900,
-                'colors' => ['Blanco'],
+                'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
                 'description' => 'Producto de la colección Mumbai.',
