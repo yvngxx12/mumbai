@@ -28,14 +28,18 @@ return [
 
     /*
     | Datos del checkout (preventa contra transferencia).
-    | CVU / Alias / WhatsApp se setean en Render Environment con las claves
-    | SHOP_CVU, SHOP_ALIAS y SHOP_WHATSAPP, o directamente acá.
+    | CVU / Alias se setean en Render Environment con las claves SHOP_CVU y
+    | SHOP_ALIAS (o directamente acá). WhatsApp admite dos números: el
+    | cliente elige con cuál contactarse al enviar el comprobante.
     */
     'checkout' => [
         'deposit_percent' => 50,
-        'cvu' => env('SHOP_CVU', '0000000000000000000000'),
-        'alias' => env('SHOP_ALIAS', 'mumbai.pagos'),
-        'whatsapp' => env('SHOP_WHATSAPP', '5491100000000'),
+        'cvu' => env('SHOP_CVU', '0000003100090051145766'),
+        'alias' => env('SHOP_ALIAS', 'mumbai.store'),
+        'whatsapp' => [
+            '5493764900777' => 'WhatsApp 1',
+            '5493764200243' => 'WhatsApp 2',
+        ],
         'drop_date' => env('SHOP_DROP_DATE', '25 de octubre de 2026'),
     ],
 ];

@@ -786,12 +786,17 @@ button {
     text-align: right;
 }
 
+.wa-btns {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+}
+
 .wa-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 16px;
     width: 100%;
     padding: 13px 16px;
     background: #25d366;

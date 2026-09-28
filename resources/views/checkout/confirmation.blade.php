@@ -62,17 +62,21 @@
                             </div>
                         </div>
 
-                        <a
-                            class="wa-btn"
-                            target="_blank"
-                            rel="noopener"
-                            href="{{ shop_whatsapp_link($whatsappText) }}"
-                        >
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                                <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5 14c-.3.8-1.6 1.5-2.3 1.6-.6.1-1.3.1-2.1-.1a7 7 0 0 1-1.9-1.2c-3.3-2.9-4.3-5.8-4.4-6.1-.1-.2-.8-2 .4-3.8.7-1 1.6-1.2 1.9-1.1.4.1.8.3 1 .9l.9 2.1c.2.4.3.7.1 1a1.2 1.2 0 0 1-.5.6l-.7.7c-.3.3-.5.6-.2 1 .3.5 1.4 2.3 3 3.6 2.1 1.7 3.1 1.9 3.6 2 .4.1.9 0 1.2-.5.4-.5 1.4-1.7 1.7-2.3.3-.5.6-.5 1.1-.4.5.2 3.2 1.5 3.7 1.8.5.3.9.5 1 .8Z"/>
-                            </svg>
-                            Enviar comprobante por WhatsApp
-                        </a>
+                        <div class="wa-btns">
+                            @foreach (shop_whatsapp_numbers() as $waNumber => $waLabel)
+                                <a
+                                    class="wa-btn"
+                                    target="_blank"
+                                    rel="noopener"
+                                    href="{{ shop_whatsapp_link($whatsappText, $waNumber) }}"
+                                >
+                                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                        <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5 14c-.3.8-1.6 1.5-2.3 1.6-.6.1-1.3.1-2.1-.1a7 7 0 0 1-1.9-1.2c-3.3-2.9-4.3-5.8-4.4-6.1-.1-.2-.8-2 .4-3.8.7-1 1.6-1.2 1.9-1.1.4.1.8.3 1 .9l.9 2.1c.2.4.3.7.1 1a1.2 1.2 0 0 1-.5.6l-.7.7c-.3.3-.5.6-.2 1 .3.5 1.4 2.3 3 3.6 2.1 1.7 3.1 1.9 3.6 2 .4.1.9 0 1.2-.5.4-.5 1.4-1.7 1.7-2.3.3-.5.6-.5 1.1-.4.5.2 3.2 1.5 3.7 1.8.5.3.9.5 1 .8Z"/>
+                                    </svg>
+                                    Enviar comprobante por WhatsApp · {{ $waLabel }}
+                                </a>
+                            @endforeach
+                        </div>
 
                         <p class="checkout-note">
                             Resumen: {{ $order->product_name }} · {{ $order->color_name }} · talle {{ $order->size_name }} ·

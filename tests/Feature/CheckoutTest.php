@@ -45,7 +45,9 @@ class CheckoutTest extends TestCase
             ->assertSee(config('shop.checkout.cvu'))
             ->assertSee(config('shop.checkout.alias'))
             ->assertSee(config('shop.checkout.drop_date'))
-            ->assertSee('Confirmar compra');
+            ->assertSee('Confirmar compra')
+            ->assertSee('WhatsApp 1')
+            ->assertSee('WhatsApp 2');
     }
 
     public function test_checkout_redirects_back_without_a_valid_variant(): void
@@ -128,11 +130,15 @@ class CheckoutTest extends TestCase
             'deposit' => 10000,
         ]);
 
-        $this->get(route('checkout.confirmation', $order))
-            ->assertOk()
+        $response = $this->get(route('checkout.confirmation', $order));
+
+        $response->assertOk()
             ->assertSee('MUMBAI-0042')
-            ->assertSee('Enviar comprobante por WhatsApp')
-            ->assertSee('wa.me/'.config('shop.checkout.whatsapp'), false)
-            ->assertSee('MUMBAI-0042', false);
+            ->assertSee('Enviar comprobante por WhatsApp');
+
+        foreach (config('shop.checkout.whatsapp') as $waNumber => $waLabel) {
+            $response->assertSee('wa.me/'.$waNumber, false)
+                ->assertSee($waLabel);
+        }
     }
 }

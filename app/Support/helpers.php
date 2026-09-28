@@ -27,10 +27,31 @@ if (! function_exists('shop_deposit')) {
 
 if (! function_exists('shop_whatsapp_link')) {
     /**
-     * Arma el link de WhatsApp con un mensaje precargado.
+     * Arma el link de WhatsApp con un mensaje precargado. Si no se pasa un
+     * número, usa el primero configurado en shop.checkout.whatsapp.
      */
-    function shop_whatsapp_link(string $message): string
+    function shop_whatsapp_link(string $message, ?string $number = null): string
     {
-        return 'https://wa.me/'.config('shop.checkout.whatsapp').'?text='.rawurlencode($message);
+        $numbers = config('shop.checkout.whatsapp');
+
+        if (is_array($numbers)) {
+            $number ??= (string) array_key_first($numbers);
+        } else {
+            $number ??= (string) $numbers;
+        }
+
+        return 'https://wa.me/'.$number.'?text='.rawurlencode($message);
+    }
+}
+
+if (! function_exists('shop_whatsapp_numbers')) {
+    /**
+     * Devuelve los números de WhatsApp del checkout como [número => etiqueta].
+     */
+    function shop_whatsapp_numbers(): array
+    {
+        $numbers = config('shop.checkout.whatsapp');
+
+        return is_array($numbers) ? $numbers : [$numbers => 'WhatsApp'];
     }
 }
