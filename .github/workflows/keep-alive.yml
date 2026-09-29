@@ -1,0 +1,14 @@
+name: keep-alive
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    name: Ping Render app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake the free instance
+        run: curl -fsS -o /dev/null -w 'status=%{http_code}\n' https://mumbai-ef2d.onrender.com/ping.txt
