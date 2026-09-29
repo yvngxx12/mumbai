@@ -18,7 +18,7 @@ class ProductSeeder extends Seeder
             [
                 'name' => '12S',
                 'type' => 'Básica',
-                'price' => 22900,
+                'price' => 24500,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -27,7 +27,7 @@ class ProductSeeder extends Seeder
             [
                 'name' => '12S 2',
                 'type' => 'Básica',
-                'price' => 22900,
+                'price' => 25000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -35,8 +35,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'BIRKI',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -45,7 +45,7 @@ class ProductSeeder extends Seeder
             [
                 'name' => 'DUBAI',
                 'type' => 'Básica',
-                'price' => 22900,
+                'price' => 24000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -53,8 +53,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'DUSK',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26500,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -62,8 +62,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'GANG',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -71,8 +71,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'KILLBILL',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -81,7 +81,7 @@ class ProductSeeder extends Seeder
             [
                 'name' => 'MUMBAI',
                 'type' => 'Básica',
-                'price' => 22900,
+                'price' => 25000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -89,8 +89,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'MUMBAI III',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -98,8 +98,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'MUMBAI IIII',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26000,
                 'colors' => ['Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -108,7 +108,7 @@ class ProductSeeder extends Seeder
             [
                 'name' => 'MUMBAI 2',
                 'type' => 'Básica',
-                'price' => 22900,
+                'price' => 25000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -116,8 +116,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'PANT',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26500,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -125,8 +125,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'STREET',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -135,7 +135,7 @@ class ProductSeeder extends Seeder
             [
                 'name' => 'TOUR',
                 'type' => 'Básica',
-                'price' => 22900,
+                'price' => 25000,
                 'colors' => ['Blanco', 'Negro', 'Blanco/Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -143,8 +143,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'WILD',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
@@ -152,8 +152,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'YOUNG',
-                'type' => 'Básica',
-                'price' => 22900,
+                'type' => 'Oversize',
+                'price' => 26000,
                 'colors' => ['Blanco', 'Negro'],
                 'sizes' => ['S', 'M', 'L', 'XL'],
                 'stock' => 20,
