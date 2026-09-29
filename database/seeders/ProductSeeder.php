@@ -185,7 +185,7 @@ class ProductSeeder extends Seeder
 
             $primaryImage = self::photoFor($slug) ?? $primaryImage;
 
-            $product = Product::updateOrCreate(
+            $product = Product::firstOrCreate(
                 ['slug' => $slug],
                 [
                     'name' => $data['name'],
@@ -197,11 +197,13 @@ class ProductSeeder extends Seeder
                 ],
             );
 
-            $product->colors()->sync($pivot);
+            if ($product->wasRecentlyCreated) {
+                $product->colors()->sync($pivot);
 
-            $product->sizes()->sync(
-                Size::whereIn('name', $data['sizes'])->orderBy('sort')->pluck('id'),
-            );
+                $product->sizes()->sync(
+                    Size::whereIn('name', $data['sizes'])->orderBy('sort')->pluck('id'),
+                );
+            }
         }
     }
 

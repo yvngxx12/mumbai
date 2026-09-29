@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Product;
+use App\Models\Size;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -49,5 +50,22 @@ class CatalogTest extends TestCase
         $this->seed();
 
         $this->get(route('home'))->assertSee(config('shop.currency'));
+    }
+
+    public function test_seeder_does_not_overwrite_admin_catalog_changes(): void
+    {
+        $this->seed();
+
+        $product = Product::where('slug', '12s')->firstOrFail();
+        $product->update(['price' => 30000, 'stock' => 7]);
+        $product->sizes()->detach(Size::where('name', 'M')->firstOrFail());
+
+        $this->seed();
+
+        $product->refresh();
+
+        $this->assertSame(30000.0, $product->price);
+        $this->assertSame(7, $product->stock);
+        $this->assertFalse($product->sizes->pluck('name')->contains('M'));
     }
 }
